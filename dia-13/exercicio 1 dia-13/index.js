@@ -1,45 +1,146 @@
-let continuar = true
+let continuar = true;
 
-
-class Computador{
-    Tipo
-    Processador
-    Video
-    Armazenamento
-    MemoriaRam
-    Ssd
-    constructor(Tipo, Processador, Video, Armazenamento, MemoriaRam, Ssd){
-        this.Tipo = Tipo
-        this.Processador = Processador
-        this.Video = Video
-        this.MemoriaRam = MemoriaRam
-        this.Armazenamento = Armazenamento
-        this.Ssd = Ssd
-    }
-    descricao(){
-        console.log('Meu '+this.Tipo+'tem um precessador '+this.Processador+ ', uma placa de Video '+this.Video+ ', um '+this.Ssd+' uma capacidade de Armazenamento de '+this.Armazenamento+ ' e '+this.MemoriaRam+ ' de memoria RAM.')
-    }
-    exibirInformacoes(){
-        console.log('Informações do computador:')
-        console.log(`Tipo: ${this.Tipo}`)
-        console.log(`Processador: ${this.Processador}`)
-        console.log(`Video: ${this.Video}`)
-        console.log(`Armazenamento: ${this.Armazenamento} GB`)
-        console.log(`Memoria RAM: ${this.MemoriaRam} GB`)
-        console.log(`Tem SSD: ${this.Ssd}`)
+class Livros {
+    constructor(titulo, autor, editora, anoDeLancamento, disponibilidade) {
+        this.Titulo = titulo;
+        this.Autor = autor;
+        this.Editora = editora;
+        this.AnoDeLancamento = anoDeLancamento;
+        this.Disponibilidade = disponibilidade;
     }
 }
 
-const meuComputador = new Computador("notebook", "Celeron", "Dedicado", 256, 8, false)
+let livros = [];
+livros.push(new Livros('livro1', 'Marcos', 'editora a', 2000, true));
+livros.push(new Livros('livro2', 'Mateus', 'editora b', 2001, true));
+livros.push(new Livros('livro3', 'Lucas', 'editora c', 2002, true));
+livros.push(new Livros('livro4', 'João', 'editora d', 2003, true));
 
-while(continuar){
-    let Tipo = prompt('Insira o Tipo de sua maquina (computador/notebook)')
-    let Processador = prompt('Insira seu Processador (modelo)')
-    let Video = prompt('Insira sua placa de Video (Integrado/dedicado)')
-    let Armazenamento = prompt('Insira a capacidade de seu Armazenamento (GB)')
-    let MemoriaRam = prompt('Insira a capacidade de seu processamento (GB)')
-    let Ssd = prompt('Tem SSD? (True/False)')
-    
-    continuar = false
+class Biblioteca {
+    constructor(nome, endereco, telefone, acervo) {
+        this.Nome = nome;
+        this.Endereco = endereco;
+        this.Telefone = telefone;
+        this.AcervoLivros = acervo;
+    }
+
+    BuscarLivroPeloTitulo(titulo) {
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo.toLowerCase() === titulo.toLowerCase()) {
+                console.log(livro);
+            }
+        });
+    }
+
+    EmprestarLivro(titulo) {
+        let emprestado = false;
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo.toLowerCase() === titulo.toLowerCase()) {
+                if (livro.Disponibilidade) {
+                    livro.Disponibilidade = false;
+                    emprestado = true;
+                }
+            }
+        });
+        return emprestado;
+    }
+
+    DevolverLivro(titulo) {
+        this.AcervoLivros.forEach(livro => {
+            if (livro.Titulo.toLowerCase() === titulo.toLowerCase()) {
+                livro.Disponibilidade = true;
+                console.log('Livro devolvido');
+            }
+        });
+    }
 }
 
+let biblioteca = new Biblioteca('Biblioteca DoDev', 'Rua 2', '123456', livros);
+
+biblioteca.BuscarLivroPeloTitulo('livro2');
+biblioteca.EmprestarLivro('livro1');
+biblioteca.DevolverLivro('livro1');
+
+
+
+
+
+
+
+/*let continuar = true
+
+class Livros{
+    Titulo
+    Autor
+    Editora
+    AnoDeLancamento
+    Disponibilidade
+    constructor(titulo, autor, editora, anoDeLancamento, disponibilidade){
+        this.Titulo = titulo
+        this.Autor = autor
+        this.Editora = editora
+        this.AnoDeLancamento = anoDeLancamento
+        this.Disponibilidade = disponibilidade
+    }
+}
+let livros = []
+livros.push(new Livros('livro1', 'Marcos', 'editora a',2000))
+livros.push(new Livros('livro2', 'Mateus', 'editora b',2001))
+livros.push(new Livros('livro3', 'Lucas', 'editora c',2002))
+livros.push(new Livros('livro4', 'João', 'editora d',2003))
+
+
+class Biblioteca{
+    Nome
+    Endereco
+    Telefone
+    AcervoLivros = []
+    constructor(nome, endereco, telefone, acervo){
+        this.Nome = nome
+        this.Endereco = endereco
+        this.Telefone = telefone
+        this.AcervoLivros = acervo
+    }
+
+    BuscarLivroPeloTitulo(titulo){
+        this.AcervoLivros.forEach(livro => {
+            if(livro.Titulo == titulo){
+                console.log(livro)
+            }
+        })
+    }
+
+
+
+    EmprestarLivro(titulo){
+        let emprestado = false
+        this.AcervoLivros.forEach(livro => {
+            if(livro.Titulo == titulo){
+                if(livro.Disponibilidade == true){
+                    livro.Disponibilidade = false
+                    emprestado = true
+                }
+            }
+        })
+        if(emprestado){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    DevolverLivro(titulo){
+        livros.forEach(livro => {
+            if(livro.Titulo == titulo){
+                livro.Disponibilidade = true
+                console.log('Livro devolvido')
+            }
+        })
+    }
+}
+
+let biblioteca = new Biblioteca('Biblioteca DoDev', '123456', 'Rua 2', livros)
+
+biblioteca.BuscarLivroPeloTitulo('Livro2')
+biblioteca.EmprestarLivro('Livro1')
+biblioteca.DevolverLivro('Livro1')*/
